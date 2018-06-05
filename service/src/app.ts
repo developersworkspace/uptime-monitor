@@ -34,7 +34,7 @@ app.listen(argv.port || process.env.PORT || 3000, () => {
     // logger.info(`listening on port ${argv.port || process.env.PORT || 3000}`);
 });
 
-schedule.scheduleJob('*/5 * * * *', () => {
+schedule.scheduleJob('*/1 * * * *', () => {
     const monitorService: IMonitorService = container.get<IMonitorService>('IMonitorService');
 
     monitorService.checkAll();

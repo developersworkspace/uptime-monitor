@@ -34,8 +34,12 @@ export class MonitorService implements IMonitorService {
             const response: any = await axios.get(url);
             const endTimestamp: Date = new Date();
 
+            if (response.status !== 200) {
+                return Check.create(null, null, url);
+            }
+
             return Check.create(endTimestamp, startTimestamp, url);
-        } catch {
+        } catch (error) {
             return Check.create(null, null, url);
         }
     }

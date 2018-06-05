@@ -17,7 +17,9 @@ describe('WebsiteService', () => {
 
     beforeEach(async () => {
         checkRepository = {
-            calculateAverageResponseTime: null,
+            calculateAverageResponseTime: async () => {
+             return null;
+            },
             findAll: async () => {
                 return null;
             },
@@ -33,7 +35,7 @@ describe('WebsiteService', () => {
         } as IWebsiteRepository;
     });
 
-    describe('#website', () => {
+    describe('#statistics', () => {
         it('should return website statistics with availability', async () => {
             sinon.stub(checkRepository, 'findAll')
                 .returns([
