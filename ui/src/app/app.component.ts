@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { WebsiteStatistics } from './models/website-statistics';
 import { Website } from './models/website';
+import { DateHelper } from './helpers/date';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,7 @@ export class AppComponent {
   }
 
   protected loadWebsite(): void {
-    this.http.get(`http://api.uptime-monitor.openservices.co.za/api/website`).subscribe((websites: Website[]) => {
+    this.http.get(`http://api.uptime-monitor.openservices.co.za/api/website`).subscribe((websites: any[]) => {
       for (const website of websites) {
         this.loadWebsiteStatistics(website.url);
       }
@@ -26,8 +27,16 @@ export class AppComponent {
 
   protected loadWebsiteStatistics(url: string): void {
     this.http.get(`http://api.uptime-monitor.openservices.co.za/api/website/statistics?url=${url}`)
-      .subscribe((websiteStatistics: WebsiteStatistics) => {
-        this.websiteStatistics.push(websiteStatistics);
+      .subscribe((websiteStatistics: any) => {
+        this.websiteStatistics.push(new WebsiteStatistics(
+          websiteStatistics.availability,
+          websiteStatistics.averageResponseTime,
+          new Website(
+            DateHelper.toDate(websiteStatistics.website.createdTimestamp),
+            websiteStatistics.website.id,
+            websiteStatistics.website.name,
+            websiteStatistics.website.url,
+          )));
       });
   }
 

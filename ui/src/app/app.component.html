@@ -3,7 +3,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="/">
           Dashboard
         </a>
       </li>
@@ -19,17 +19,21 @@
         <thead>
           <tr>
             <th scope="col">Name</th>
-            <th scope="col">URL</th>
             <th scope="col">Availability</th>
             <th scope="col">Average Response Time</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let ws of websiteStatistics" class="{{ ws.availability > 99.999? 'bg-light' : 'bg-danger' }}">
+          <tr *ngFor="let ws of websiteStatistics">
             <td>{{ ws.website.name }}</td>
-            <td>{{ ws.website.url }}</td>
-            <td>{{ ws.availability }}</td>
-            <td>{{ ws.averageResponseTime }}</td>
+            <td>
+              <img src="{{ ws.website.createdTimestampBadge }}" />
+              <br />
+              <img src="{{ ws.availabilityBadge }}" />
+            </td>
+            <td>
+              <img src="{{ ws.averageResponseTimeBadge }}" />
+            </td>
           </tr>
         </tbody>
       </table>
