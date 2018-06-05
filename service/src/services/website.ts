@@ -19,7 +19,9 @@ export class WebsiteService implements IWebsiteService {
     }
 
     public async create(userId: string, website: Website): Promise<Website> {
-        await this.websiteRepository.insert(userId, website);
+        const id: string = await this.websiteRepository.insert(userId, website);
+
+        website.id = id;
 
         return website;
     }

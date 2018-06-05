@@ -39,14 +39,22 @@ export class WebsiteRepository implements IWebsiteRepository {
         return result.map((x: any) => new Website(x.createdTimestamp, x.id, x.name, x.url));
     }
 
-    public async insert(userId: string, website: Website): Promise<void> {
+    public async insert(userId: string, website: Website): Promise<string> {
         const client: mongodb.MongoClient = await mongodb.MongoClient.connect('mongodb://127.0.0.1:27017');
 
         const database: mongodb.Db = client.db('uptime-monitor');
 
         const collection: mongodb.Collection = database.collection('websites');
 
-        await collection.insertOne(website);
+        const dto: any = {
+            createdTimestamp: website.createdTimestamp,
+            name: website.name,
+            url: website.url,
+        };
+
+        await collection.insertOne(dto);
+
+        return dto._id;
     }
 
 }

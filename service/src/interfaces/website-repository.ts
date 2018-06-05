@@ -6,6 +6,6 @@ export interface IWebsiteRepository {
 
     findAll(userId: string): Promise<Website[]>;
 
-    insert(userId: string, website: Website): Promise<void>;
+    insert(userId: string, website: Website): Promise<string>;
 
 }
