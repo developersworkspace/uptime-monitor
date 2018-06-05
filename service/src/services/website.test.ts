@@ -17,6 +17,7 @@ describe('WebsiteService', () => {
 
     beforeEach(async () => {
         checkRepository = {
+            calculateAverageResponseTime: null,
             findAll: async () => {
                 return null;
             },

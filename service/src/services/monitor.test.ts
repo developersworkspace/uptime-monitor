@@ -15,6 +15,7 @@ describe('MonitorService', () => {
 
   beforeEach(async () => {
     checkRepository = {
+      calculateAverageResponseTime: null,
       findAll: null,
       insert: async () => {
         return null;

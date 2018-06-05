@@ -47,7 +47,7 @@ export class WebsiteService implements IWebsiteService {
 
         const availability: number = this.availabilitySince(currentTimestamp, website.createdTimestamp, totalDownTimeInMilliseconds);
 
-        const averageResponseTime: number = this.calculateAverageResponseTime(checks);
+        const averageResponseTime: number = await this.checkRepository.calculateAverageResponseTime(url);
 
         return new WebsiteStatistics(availability, averageResponseTime, website);
     }
@@ -82,18 +82,6 @@ export class WebsiteService implements IWebsiteService {
         }
 
         return totalDownTimeInMilliseconds;
-    }
-
-    protected calculateAverageResponseTime(checks: Check[]): number {
-        const count: number = checks.length;
-
-        let sum: number = 0;
-
-        for (const check of checks) {
-            sum += check.responseTime;
-        }
-
-        return sum / count;
     }
 
 }
