@@ -71,7 +71,7 @@ definitions:
     type: "object"
     properties:
       createdTimestamp:
-        type: "date"
+        type: "string"
       id:
         type: "string"
       name:
