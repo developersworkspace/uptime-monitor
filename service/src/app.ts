@@ -22,7 +22,9 @@ const swaggerDocument = yamljs.load(path.join(__dirname, 'swagger.yaml'));
 app.use('/api/docs', swagger.serve, swagger.setup(swaggerDocument, { explore: true }));
 
 app.route('/api/website')
-    .get(WebsiteRouter.get)
+    .get(WebsiteRouter.get);
+
+app.route('/api/website')
     .post(WebsiteRouter.post);
 
 app.route('/api/website/statistics')

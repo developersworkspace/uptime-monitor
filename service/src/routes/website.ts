@@ -22,6 +22,8 @@ export class WebsiteRouter {
         try {
             const body = req.body;
 
+            console.log(body);
+
             const website: Website = new Website(new Date(), body.id, body.name, body.url);
 
             const websiteService: IWebsiteService = container.get<IWebsiteService>('IWebsiteService');
