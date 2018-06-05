@@ -9,7 +9,7 @@ info:
   license:
     name: "MIT"
     url: "https://opensource.org/licenses/MIT"
-host: "localhost:3000"
+host: "http://api.uptime-monitor.openservices.co.za"
 basePath: "/api"
 schemes:
 - "http"
