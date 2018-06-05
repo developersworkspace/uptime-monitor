@@ -2,14 +2,13 @@ import { injectable } from 'inversify';
 import * as mongodb from 'mongodb';
 import { Check } from '../entities/check';
 import { ICheckRepository } from '../interfaces/check-repository';
+import { BaseRepository } from './base';
 
 @injectable()
-export class CheckRepository implements ICheckRepository {
+export class CheckRepository extends BaseRepository implements ICheckRepository {
 
     public async calculateAverageResponseTime(url: string): Promise<number> {
-        const client: mongodb.MongoClient = await mongodb.MongoClient.connect('mongodb://127.0.0.1:27017');
-
-        const database: mongodb.Db = client.db('uptime-monitor');
+        const database: mongodb.Db = await this.getDatabase();
 
         const collection: mongodb.Collection = database.collection('checks');
 
@@ -33,9 +32,7 @@ export class CheckRepository implements ICheckRepository {
     }
 
     public async insert(check: Check): Promise<string> {
-        const client: mongodb.MongoClient = await mongodb.MongoClient.connect('mongodb://127.0.0.1:27017');
-
-        const database: mongodb.Db = client.db('uptime-monitor');
+        const database: mongodb.Db = await this.getDatabase();
 
         const collection: mongodb.Collection = database.collection('checks');
 
@@ -61,9 +58,7 @@ export class CheckRepository implements ICheckRepository {
     }
 
     public async findAll(url: string): Promise<Check[]> {
-        const client: mongodb.MongoClient = await mongodb.MongoClient.connect('mongodb://127.0.0.1:27017');
-
-        const database: mongodb.Db = client.db('uptime-monitor');
+        const database: mongodb.Db = await this.getDatabase();
 
         const collection: mongodb.Collection = database.collection('checks');
 
@@ -76,9 +71,7 @@ export class CheckRepository implements ICheckRepository {
     }
 
     protected async findLast(url: string): Promise<Check> {
-        const client: mongodb.MongoClient = await mongodb.MongoClient.connect('mongodb://127.0.0.1:27017');
-
-        const database: mongodb.Db = client.db('uptime-monitor');
+        const database: mongodb.Db = await this.getDatabase();
 
         const collection: mongodb.Collection = database.collection('checks');
 
