@@ -17,7 +17,7 @@ describe('MonitorService', () => {
     checkRepository = {
       findAll: null,
       insert: async () => {
-
+        return null;
       },
     } as ICheckRepository;
 
