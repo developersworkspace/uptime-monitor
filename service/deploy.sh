@@ -7,7 +7,7 @@ rm -rf /opt/uptime-monitor
 git clone https://github.com/developersworkspace/uptime-monitor.git /opt/repositories/uptime-monitor
 
 # Copy NGINX Configuration
-cp  /opt/repositories/uptime-monitor/service/nginx.conf /etc/nginx/sites-enabled/uptime-monitor.conf
+cp /opt/repositories/uptime-monitor/service/nginx.conf /etc/nginx/sites-enabled/uptime-monitor.conf
 
 # Restart NGINX
 systemctl restart nginx
