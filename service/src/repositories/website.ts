@@ -18,6 +18,10 @@ export class WebsiteRepository implements IWebsiteRepository {
             userId,
         });
 
+        if (!result) {
+            return null;
+        }
+
         return new Website(result.createdTimestamp, result.id, result.name, result.url);
     }
 
