@@ -38,7 +38,7 @@ export class CheckRepository implements ICheckRepository {
             url,
         }).toArray();
 
-        return result.map((x: any) => new Check(x.id, x.responseTime, x.timestamp, x.up, x.url));
+        return result.map((x: any) => new Check(x._id, x.responseTime, x.timestamp, x.up, x.url));
     }
 
 }
