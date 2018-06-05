@@ -22,7 +22,7 @@ export class WebsiteRepository implements IWebsiteRepository {
             return null;
         }
 
-        return new Website(result.createdTimestamp, result.id, result.name, result.url);
+        return new Website(result.createdTimestamp, result._id, result.name, result.url);
     }
 
     public async findAll(userId: string): Promise<Website[]> {
@@ -36,7 +36,7 @@ export class WebsiteRepository implements IWebsiteRepository {
             userId,
         }).toArray();
 
-        return result.map((x: any) => new Website(x.createdTimestamp, x.id, x.name, x.url));
+        return result.map((x: any) => new Website(x.createdTimestamp, x._id, x.name, x.url));
     }
 
     public async insert(userId: string, website: Website): Promise<string> {
