@@ -1,4 +1,4 @@
-# sudo curl -s https://raw.githubusercontent.com/developersworkspace/uptime-monitor/master/deploy.sh | bash -s
+# sudo curl -s https://raw.githubusercontent.com/developersworkspace/uptime-monitor/master/service/deploy.sh | bash -s
 
 # Remove Directory
 rm -rf /opt/uptime-monitor
@@ -7,7 +7,7 @@ rm -rf /opt/uptime-monitor
 git clone https://github.com/developersworkspace/uptime-monitor.git /opt/repositories/uptime-monitor
 
 # Copy NGINX Configuration
-cp  /opt/repositories/uptime-monitor/nginx.conf /etc/nginx/sites-enabled/uptime-monitor.conf
+cp  /opt/repositories/uptime-monitor/service/nginx.conf /etc/nginx/sites-enabled/uptime-monitor.conf
 
 # Restart NGINX
 systemctl restart nginx
