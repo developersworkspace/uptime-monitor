@@ -1,4 +1,4 @@
-# sudo curl -s https://raw.githubusercontent.com/developersworkspace/uptime-monitor/master/deploy.sh | bash -s
+# sudo curl -s https://raw.githubusercontent.com/developersworkspace/uptime-monitor/master/service/setup.sh | bash -s
 
 # Install NGINX
 apt update
