@@ -1,0 +1,90 @@
+swagger: "2.0"
+info:
+  description: "Website availability/uptime monitor"
+  version: "1.0.0"
+  title: "Uptime Monitor"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "developersworkspace@gmail.com"
+  license:
+    name: "MIT"
+    url: "https://opensource.org/licenses/MIT"
+host: "localhost:3000"
+basePath: "/api"
+schemes:
+- "http"
+paths:
+  /website:
+    get:
+      summary: "Find Website"
+      description: "Returns Website"
+      operationId: "findWebsite"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "query"
+        name: "url"
+        description: "URL of website"
+        required: true
+        type: "string"
+      responses:
+        200:
+            description: "Website"
+            schema:
+                $ref: "#/definitions/Website"
+    post:
+      summary: "Create Website"
+      description: "Creates website"
+      operationId: "createWebsite"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/Website"
+      responses:
+        200:
+            description: "Website"
+            schema:
+                $ref: "#/definitions/Website"
+  /website/statistics:
+    get:
+      summary: "Find Website Statistics"
+      description: "Returns Website Statistics"
+      operationId: "findWebsiteStatistics"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "query"
+        name: "url"
+        description: "URL of website"
+        required: true
+        type: "string"
+      responses:
+        200:
+            description: "Website Statistics"
+            schema:
+                $ref: "#/definitions/WebsiteStatistics"
+definitions:
+  Website:
+    type: "object"
+    properties:
+      createdTimestamp:
+        type: "date"
+      id:
+        type: "string"
+      name:
+        type: "string"
+      url:
+        type: "string"
+  WebsiteStatistics:
+    type: "object"
+    properties:
+      availability:
+        type: "number"
+      website:
+        $ref: "#/definitions/Website"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"

@@ -1,24 +1,49 @@
 import { expect } from 'chai';
 import 'mocha';
-import { IMonitorService } from '../interfaces/monitor-service';
-import { MonitorService } from './monitor';
+import 'reflect-metadata';
+import * as sinon from 'sinon';
+import { Website } from '../entities/website';
 import { ICheckRepository } from '../interfaces/check-repository';
-import { CheckRepository } from '../repositories/check';
+import { IMonitorService } from '../interfaces/monitor-service';
 import { IWebsiteRepository } from '../interfaces/website-repository';
-import { WebsiteRepository } from '../repositories/website';
+import { MonitorService } from './monitor';
 
 describe('MonitorService', () => {
 
+  let checkRepository: ICheckRepository = null;
+  let websiteRepository: IWebsiteRepository = null;
+
+  beforeEach(async () => {
+    checkRepository = {
+      findAll: null,
+      insert: async () => {
+
+      },
+    } as ICheckRepository;
+
+    websiteRepository = {
+      find: null,
+      findAll: async () => {
+        return null;
+      },
+      insert: null,
+    } as IWebsiteRepository;
+  });
+
   describe('#checkAll', () => {
     it('should check all website availability', async () => {
-      const checkRepository: ICheckRepository = new CheckRepository();
-      const websiteRepository: IWebsiteRepository = new WebsiteRepository();
+      const checkRepositoryInsertSpy: sinon.SinonSpy = sinon.spy(checkRepository, 'insert');
+
+      sinon.stub(websiteRepository, 'findAll').returns([
+        new Website(null, null, null, 'http://example.com'),
+        new Website(null, null, null, 'http://example.com'),
+      ]);
 
       const monitorSerivce: IMonitorService = new MonitorService(checkRepository, websiteRepository);
-    
+
       await monitorSerivce.checkAll();
-    
-      // TODO: Assert on SPY
+
+      expect(checkRepositoryInsertSpy.callCount).to.be.eq(2);
     });
   });
 

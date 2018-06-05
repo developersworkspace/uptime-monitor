@@ -1,14 +1,39 @@
-import { IStatisticsService } from './interfaces/statistics-service';
-import { CheckRepository } from './repositories/check';
-import { WebsiteRepository } from './repositories/website';
-import { StatisticsService } from './services/statistics';
-import { WebsiteStatistics } from './value-objects/website-statistics';
+import * as bodyParser from 'body-parser';
+import * as cors from 'cors';
+import * as express from 'express';
+import * as fs from 'fs';
+import * as schedule from 'node-schedule';
+import * as path from 'path';
+import * as swagger from 'swagger-ui-express';
+import * as yamljs from 'yamljs';
+import * as yargs from 'yargs';
+import { IMonitorService } from './interfaces/monitor-service';
+import { container } from './ioc';
+import { WebsiteRouter } from './routes/website';
 
-(async () => {
+const argv = yargs.argv;
+const app = express();
 
-    const statisticsService: IStatisticsService = new StatisticsService(new CheckRepository(), new WebsiteRepository());
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use(cors());
 
-    const websiteStatistics: WebsiteStatistics = await statisticsService.websiteStatistics('https://euromonitor.com', null);
+const swaggerDocument = yamljs.load(path.join(__dirname, 'swagger.yaml'));
 
-    console.log(websiteStatistics);
-})();
+app.use('/api/docs', swagger.serve, swagger.setup(swaggerDocument, { explore: true }));
+
+app.route('/api/website')
+    .get(WebsiteRouter.get)
+    .post(WebsiteRouter.post);
+
+app.route('/api/website/statistics')
+    .get(WebsiteRouter.statistics);
+
+app.listen(argv.port || process.env.PORT || 3000, () => {
+    // logger.info(`listening on port ${argv.port || process.env.PORT || 3000}`);
+});
+
+schedule.scheduleJob('*/1 * * * *', () => {
+    const monitorService: IMonitorService = container.get<IMonitorService>('IMonitorService');
+
+    monitorService.checkAll();
+});
