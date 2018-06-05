@@ -1,6 +1,8 @@
+import { injectable } from 'inversify';
 import { Website } from '../entities/website';
 import { IWebsiteRepository } from '../interfaces/website-repository';
 
+@injectable()
 export class WebsiteRepository implements IWebsiteRepository {
 
     private static websites: Website[] = [

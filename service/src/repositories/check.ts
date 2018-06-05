@@ -1,5 +1,7 @@
+import { injectable } from 'inversify';
 import { Check } from '../entities/check';
 
+@injectable()
 export class CheckRepository {
 
     private static checks: Check[] = [];

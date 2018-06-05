@@ -1,14 +1,18 @@
 import axios from 'axios';
+import { inject, injectable } from 'inversify';
 import { Check } from '../entities/check';
 import { Website } from '../entities/website';
 import { ICheckRepository } from '../interfaces/check-repository';
 import { IMonitorService } from '../interfaces/monitor-service';
 import { IWebsiteRepository } from '../interfaces/website-repository';
 
+@injectable()
 export class MonitorService implements IMonitorService {
 
     constructor(
+        @inject('ICheckRepository')
         protected checkRepository: ICheckRepository,
+        @inject('IWebsiteRepository')
         protected websiteRepository: IWebsiteRepository,
     ) {
 
