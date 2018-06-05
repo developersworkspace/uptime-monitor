@@ -10,9 +10,15 @@ export class WebsiteRouter {
         try {
             const websiteService: IWebsiteService = container.get<IWebsiteService>('IWebsiteService');
 
-            const result: Website = await websiteService.find(req.query.id, null);
+            if (req.query.url) {
+                const result: Website = await websiteService.find(req.query.url, null);
 
-            res.json(result);
+                res.json(result);
+            } else {
+                const result: Website[] = await websiteService.list(null);
+
+                res.json(result);
+            }
         } catch (err) {
             res.status(500).end();
         }
