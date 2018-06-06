@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { WebsiteStatistics } from './models/website-statistics';
 import { Website } from './models/website';
 import { DateHelper } from './helpers/date';
+import { AuthenticationService } from './authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -11,39 +12,58 @@ import { DateHelper } from './helpers/date';
 })
 export class AppComponent {
 
+  public apiURL = 'http://localhost:3000/api'; // http://api.uptime-monitor.openservices.co.za/api
+
   public createWebsiteName: string = null;
 
   public createWebsiteURL: string = null;
 
   public websiteStatistics: WebsiteStatistics[] = [];
 
-  constructor(protected http: HttpClient) {
+  constructor(
+    protected authenticationService: AuthenticationService,
+    protected http: HttpClient,
+  ) {
+
+    if (!this.authenticationService.isAuthenticated()) {
+      this.authenticationService.redirect();
+    }
+
     this.loadWebsite();
 
     setInterval(() => this.loadWebsite(), 30000);
   }
 
   public onClickCreateWebsite(): void {
-    this.http.post(`http://api.uptime-monitor.openservices.co.za/api/website`, {
+    this.http.post(`${this.apiURL}/website`, {
       name: this.createWebsiteName,
       url: this.createWebsiteURL,
-    }).subscribe((response: any) => {
+    }, { headers: this.getHeaders() }).subscribe((response: any) => {
       this.createWebsiteName = null;
       this.createWebsiteURL = null;
     });
   }
 
+  protected getHeaders(): HttpHeaders {
+    const headers: HttpHeaders = new HttpHeaders();
+
+    headers.set('authorization', this.authenticationService.getAccessToken());
+
+    return headers;
+  }
+
   protected loadWebsite(): void {
     this.websiteStatistics = [];
-    this.http.get(`http://api.uptime-monitor.openservices.co.za/api/website`).subscribe((websites: any[]) => {
-      for (const website of websites) {
-        this.loadWebsiteStatistics(website.url);
-      }
-    });
+    this.http.get(`${this.apiURL}/website`, { headers: this.getHeaders() })
+      .subscribe((websites: any[]) => {
+        for (const website of websites) {
+          this.loadWebsiteStatistics(website.url);
+        }
+      });
   }
 
   protected loadWebsiteStatistics(url: string): void {
-    this.http.get(`http://api.uptime-monitor.openservices.co.za/api/website/statistics?url=${url}`)
+    this.http.get(`${this.apiURL}/website/statistics?url=${url}`, { headers: this.getHeaders() })
       .subscribe((websiteStatistics: any) => {
         this.websiteStatistics.push(new WebsiteStatistics(
           websiteStatistics.availability,
