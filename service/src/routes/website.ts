@@ -20,6 +20,7 @@ export class WebsiteRouter {
                 res.json(result);
             }
         } catch (err) {
+            console.log(err);
             res.status(500).end();
         }
     }
@@ -36,6 +37,7 @@ export class WebsiteRouter {
 
             res.json(result);
         } catch (err) {
+            console.log(err);
             res.status(500).end();
         }
     }
