@@ -15,9 +15,12 @@ export class AppComponent {
 
   constructor(protected http: HttpClient) {
     this.loadWebsite();
+
+    setInterval(() => this.loadWebsite(), 30000);
   }
 
   protected loadWebsite(): void {
+    this.websiteStatistics = [];
     this.http.get(`http://api.uptime-monitor.openservices.co.za/api/website`).subscribe((websites: any[]) => {
       for (const website of websites) {
         this.loadWebsiteStatistics(website.url);

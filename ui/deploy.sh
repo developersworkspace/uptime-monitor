@@ -1,7 +1,7 @@
 # sudo curl -s https://raw.githubusercontent.com/developersworkspace/uptime-monitor/master/ui/deploy.sh | bash -s
 
 # Remove Directory
-rm -rf /opt/uptime-monitor
+rm -rf /opt/uptime-monitor-ui
 
 # Clone Repository
 git clone https://github.com/developersworkspace/uptime-monitor.git /opt/repositories/uptime-monitor
