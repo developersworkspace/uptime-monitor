@@ -4,6 +4,7 @@ import { WebsiteStatistics } from './models/website-statistics';
 import { Website } from './models/website';
 import { DateHelper } from './helpers/date';
 import { AuthenticationService } from './authentication.service';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -12,13 +13,11 @@ import { AuthenticationService } from './authentication.service';
 })
 export class AppComponent {
 
-  // public apiURL = 'http://localhost:3000/api';
-
-  public apiURL = 'http://api.uptime-monitor.openservices.co.za/api';
-
   public createWebsiteName: string = null;
 
   public createWebsiteURL: string = null;
+
+  public user: any = null;
 
   public websiteStatistics: WebsiteStatistics[] = [];
 
@@ -31,16 +30,18 @@ export class AppComponent {
       this.authenticationService.redirect();
     }
 
+    this.loadUser();
+
     this.loadWebsite();
 
     setInterval(() => this.loadWebsite(), 30000);
   }
 
   public onClickCreateWebsite(): void {
-    this.http.post(`${this.apiURL}/website`, {
+    this.http.post(`${environment.apiURL}/website`, {
       name: this.createWebsiteName,
       url: this.createWebsiteURL,
-    }, { headers: this.getHeaders() }).subscribe((response: any) => {
+    }, { headers: this.authenticationService.getHeaders() }).subscribe((response: any) => {
       this.createWebsiteName = null;
       this.createWebsiteURL = null;
 
@@ -52,23 +53,22 @@ export class AppComponent {
     this.authenticationService.logout();
   }
 
-  protected getHeaders(): HttpHeaders {
-    const headers: HttpHeaders = new HttpHeaders({
-      authorization: this.authenticationService.getAccessToken(),
-    });
-
-    return headers;
-  }
-
   protected handleError(error: any): void {
     if (error.status === 401) {
       this.authenticationService.redirect();
     }
   }
 
+
+  protected loadUser(): void  {
+    this.authenticationService.getUser().subscribe((response: any) => {
+      this.user = response;
+    }, (error: Error) => this.handleError(error));
+  }
+
   protected loadWebsite(): void {
     this.websiteStatistics = [];
-    this.http.get(`${this.apiURL}/website`, { headers: this.getHeaders() })
+    this.http.get(`${environment.apiURL}/website`, { headers: this.authenticationService.getHeaders() })
       .subscribe((websites: any[]) => {
         for (const website of websites) {
           this.loadWebsiteStatistics(website.url);
@@ -77,7 +77,7 @@ export class AppComponent {
   }
 
   protected loadWebsiteStatistics(url: string): void {
-    this.http.get(`${this.apiURL}/website/statistics?url=${url}`, { headers: this.getHeaders() })
+    this.http.get(`${environment.apiURL}/website/statistics?url=${url}`, { headers: this.authenticationService.getHeaders() })
       .subscribe((websiteStatistics: any) => {
         this.websiteStatistics.push(new WebsiteStatistics(
           websiteStatistics.availability,

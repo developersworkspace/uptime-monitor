@@ -10,6 +10,7 @@ import * as yargs from 'yargs';
 import { IMonitorService } from './interfaces/monitor-service';
 import { container } from './ioc';
 import { GoogleAuthenticationMiddleware } from './middleware/google-authentication';
+import { UserRouter } from './routes/user';
 import { WebsiteRouter } from './routes/website';
 
 const argv = yargs.argv;
@@ -24,10 +25,11 @@ app.use('/api/docs', swagger.serve, swagger.setup(swaggerDocument, { explore: tr
 
 app.use(GoogleAuthenticationMiddleware.handle);
 
-app.route('/api/website')
-    .get(WebsiteRouter.get);
+app.route('/api/user')
+    .get(UserRouter.get);
 
 app.route('/api/website')
+    .get(WebsiteRouter.get)
     .post(WebsiteRouter.post);
 
 app.route('/api/website/statistics')
