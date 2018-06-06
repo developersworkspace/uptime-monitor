@@ -31,6 +31,8 @@ export class WebsiteRepository extends BaseRepository implements IWebsiteReposit
 
         const result: any[] = await collection.find({
             userId,
+        }).sort({
+            createdTimestamp: -1,
         }).toArray();
 
         return result.map((x: any) => new Website(x.createdTimestamp, x._id, x.name, x.url));
