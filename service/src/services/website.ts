@@ -19,6 +19,12 @@ export class WebsiteService implements IWebsiteService {
     }
 
     public async create(userId: string, website: Website): Promise<Website> {
+        const existingWebsite: Website = await this.websiteRepository.find(website.url, userId);
+
+        if (existingWebsite) {
+            return existingWebsite;
+        }
+
         const id: string = await this.websiteRepository.insert(userId, website);
 
         website.id = id;

@@ -37,7 +37,6 @@ export class CheckRepository extends BaseRepository implements ICheckRepository 
         const collection: mongodb.Collection = database.collection('checks');
 
         const result: any[] = await collection.find({
-            stateChanged: true,
             url,
         }).toArray();
 
