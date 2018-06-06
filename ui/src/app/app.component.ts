@@ -12,9 +12,9 @@ import { AuthenticationService } from './authentication.service';
 })
 export class AppComponent {
 
-  public apiURL = 'http://localhost:3000/api';
+  // public apiURL = 'http://localhost:3000/api';
 
-  // public apiURL = 'http://api.uptime-monitor.openservices.co.za/api';
+  public apiURL = 'http://api.uptime-monitor.openservices.co.za/api';
 
   public createWebsiteName: string = null;
 
