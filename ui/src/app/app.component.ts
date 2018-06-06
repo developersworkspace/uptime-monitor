@@ -12,7 +12,9 @@ import { AuthenticationService } from './authentication.service';
 })
 export class AppComponent {
 
-  public apiURL = 'http://localhost:3000/api'; // http://api.uptime-monitor.openservices.co.za/api
+  public apiURL = 'http://localhost:3000/api';
+
+  // public apiURL = 'http://api.uptime-monitor.openservices.co.za/api';
 
   public createWebsiteName: string = null;
 
@@ -41,15 +43,27 @@ export class AppComponent {
     }, { headers: this.getHeaders() }).subscribe((response: any) => {
       this.createWebsiteName = null;
       this.createWebsiteURL = null;
-    });
+
+      this.loadWebsite();
+    }, (error: Error) => this.handleError(error));
+  }
+
+  public onClickLogout(): void {
+    this.authenticationService.logout();
   }
 
   protected getHeaders(): HttpHeaders {
-    const headers: HttpHeaders = new HttpHeaders();
-
-    headers.set('authorization', this.authenticationService.getAccessToken());
+    const headers: HttpHeaders = new HttpHeaders({
+      authorization: this.authenticationService.getAccessToken(),
+    });
 
     return headers;
+  }
+
+  protected handleError(error: any): void {
+    if (error.status === 401) {
+      this.authenticationService.redirect();
+    }
   }
 
   protected loadWebsite(): void {
@@ -59,7 +73,7 @@ export class AppComponent {
         for (const website of websites) {
           this.loadWebsiteStatistics(website.url);
         }
-      });
+      }, (error: Error) => this.handleError(error));
   }
 
   protected loadWebsiteStatistics(url: string): void {
@@ -74,7 +88,7 @@ export class AppComponent {
             websiteStatistics.website.name,
             websiteStatistics.website.url,
           )));
-      });
+      }, (error: Error) => this.handleError(error));
   }
 
 }

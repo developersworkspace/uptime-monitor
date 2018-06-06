@@ -30,6 +30,11 @@ export class AuthenticationService {
     return token ? true : false;
   }
 
+  public logout(): void {
+    localStorage.setItem('authentication.token', null);
+    this.redirect();
+  }
+
   public redirect(): void {
     const parameters: string[] = [
       `client_id=${this.googleClientId}`,

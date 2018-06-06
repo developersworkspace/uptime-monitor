@@ -47,6 +47,7 @@ export class WebsiteRepository extends BaseRepository implements IWebsiteReposit
             createdTimestamp: website.createdTimestamp,
             name: website.name,
             url: website.url,
+            userId,
         };
 
         await collection.insertOne(dto);

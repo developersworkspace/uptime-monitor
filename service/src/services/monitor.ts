@@ -21,7 +21,13 @@ export class MonitorService implements IMonitorService {
     public async checkAll(): Promise<void> {
         const websites: Website[] = await this.websiteRepository.findAll(null);
 
+        const checkedWebsites: {} = {};
+
         for (const website of websites) {
+            if (website.url in checkedWebsites) {
+                continue;
+            }
+
             const check: Check = await this.check(website.url);
 
             const previousCheck: Check = await this.checkRepository.findLast(website.url);
@@ -31,6 +37,8 @@ export class MonitorService implements IMonitorService {
             }
 
             await this.checkRepository.insert(check);
+
+            checkedWebsites[website.url] = check;
         }
     }
 

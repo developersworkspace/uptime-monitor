@@ -9,6 +9,7 @@ import * as yamljs from 'yamljs';
 import * as yargs from 'yargs';
 import { IMonitorService } from './interfaces/monitor-service';
 import { container } from './ioc';
+import { GoogleAuthenticationMiddleware } from './middleware/google-authentication';
 import { WebsiteRouter } from './routes/website';
 
 const argv = yargs.argv;
@@ -20,6 +21,8 @@ app.use(cors());
 const swaggerDocument = yamljs.load(path.join(__dirname, 'swagger.yaml'));
 
 app.use('/api/docs', swagger.serve, swagger.setup(swaggerDocument, { explore: true }));
+
+app.use(GoogleAuthenticationMiddleware.handle);
 
 app.route('/api/website')
     .get(WebsiteRouter.get);

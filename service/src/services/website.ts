@@ -49,6 +49,10 @@ export class WebsiteService implements IWebsiteService {
 
         const checks: Check[] = await this.checkRepository.findAll(url);
 
+        if (checks.length !== 0) {
+            website.createdTimestamp = checks[0].timestamp;
+        }
+
         const totalDownTimeInMilliseconds: number = this.calculateTotalDownTimeInMilliseconds(checks, website);
 
         const availability: number = this.availabilitySince(currentTimestamp, website.createdTimestamp, totalDownTimeInMilliseconds);
