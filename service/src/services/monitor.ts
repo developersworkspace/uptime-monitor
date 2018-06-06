@@ -24,6 +24,12 @@ export class MonitorService implements IMonitorService {
         for (const website of websites) {
             const check: Check = await this.check(website.url);
 
+            const previousCheck: Check = await this.checkRepository.findLast(website.url);
+
+            if (previousCheck && check.up === previousCheck.up) {
+                continue;
+            }
+
             await this.checkRepository.insert(check);
         }
     }

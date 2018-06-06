@@ -31,32 +31,6 @@ export class CheckRepository extends BaseRepository implements ICheckRepository 
         return result.length === 0 ? null : result[0].average;
     }
 
-    public async insert(check: Check): Promise<string> {
-        const database: mongodb.Db = await this.getDatabase();
-
-        const collection: mongodb.Collection = database.collection('checks');
-
-        const lastCheck: Check = await this.findLast(check.url);
-
-        let stateChanged: boolean = true;
-
-        if (lastCheck && check.up === lastCheck.up) {
-            stateChanged = false;
-        }
-
-        const dto: any = {
-            responseTime: check.responseTime,
-            stateChanged,
-            timestamp: check.timestamp,
-            up: check.up,
-            url: check.url,
-        };
-
-        await collection.insertOne(dto);
-
-        return dto._id;
-    }
-
     public async findAll(url: string): Promise<Check[]> {
         const database: mongodb.Db = await this.getDatabase();
 
@@ -70,7 +44,7 @@ export class CheckRepository extends BaseRepository implements ICheckRepository 
         return result.map((x: any) => new Check(x._id, x.responseTime, x.timestamp, x.up, x.url));
     }
 
-    protected async findLast(url: string): Promise<Check> {
+    public async findLast(url: string): Promise<Check> {
         const database: mongodb.Db = await this.getDatabase();
 
         const collection: mongodb.Collection = database.collection('checks');
@@ -86,6 +60,23 @@ export class CheckRepository extends BaseRepository implements ICheckRepository 
         }
 
         return new Check(result[0]._id, result[0].responseTime, result[0].timestamp, result[0].up, result[0].url);
+    }
+
+    public async insert(check: Check): Promise<string> {
+        const database: mongodb.Db = await this.getDatabase();
+
+        const collection: mongodb.Collection = database.collection('checks');
+
+        const dto: any = {
+            responseTime: check.responseTime,
+            timestamp: check.timestamp,
+            up: check.up,
+            url: check.url,
+        };
+
+        await collection.insertOne(dto);
+
+        return dto._id;
     }
 
 }

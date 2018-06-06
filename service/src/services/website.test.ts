@@ -23,6 +23,7 @@ describe('WebsiteService', () => {
             findAll: async () => {
                 return null;
             },
+            findLast: null,
             insert: null,
         } as ICheckRepository;
 
