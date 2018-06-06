@@ -1,5 +1,7 @@
+import { injectable } from 'inversify';
 import * as mongodb from 'mongodb';
 
+@injectable()
 export class BaseRepository {
 
     private static database: mongodb.Db = null;
