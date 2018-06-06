@@ -38,6 +38,8 @@ export class CheckRepository extends BaseRepository implements ICheckRepository 
 
         const result: any[] = await collection.find({
             url,
+        }).sort({
+            timestamp: 1,
         }).toArray();
 
         return result.map((x: any) => new Check(x._id, x.responseTime, x.timestamp, x.up, x.url));

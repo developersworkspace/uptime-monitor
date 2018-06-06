@@ -11,12 +11,26 @@ import { DateHelper } from './helpers/date';
 })
 export class AppComponent {
 
+  public createWebsiteName: string = null;
+
+  public createWebsiteURL: string = null;
+
   public websiteStatistics: WebsiteStatistics[] = [];
 
   constructor(protected http: HttpClient) {
     this.loadWebsite();
 
     setInterval(() => this.loadWebsite(), 30000);
+  }
+
+  public onClickCreateWebsite(): void {
+    this.http.post(`http://api.uptime-monitor.openservices.co.za/api/website`, {
+      name: this.createWebsiteName,
+      url: this.createWebsiteURL,
+    }).subscribe((response: any) => {
+      this.createWebsiteName = null;
+      this.createWebsiteURL = null;
+    });
   }
 
   protected loadWebsite(): void {
