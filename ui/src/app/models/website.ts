@@ -19,7 +19,6 @@ export class Website {
     }
 
     protected setCreatedTimestampBadge(): void {
-        // tslint:disable-next-line:max-line-length
         this.createdTimestampBadge = `https://img.shields.io/badge/${encodeURI(`Since-${this.createdTimestampDisplay}-lightgray`)}.svg`;
     }
 
