@@ -40,7 +40,7 @@ describe('MonitorService', () => {
 
       sinon.stub(websiteRepository, 'findAll').returns([
         new Website(null, null, null, 'http://example.com'),
-        new Website(null, null, null, 'http://example.com'),
+        new Website(null, null, null, 'https://www.google.com/'),
       ]);
 
       const monitorSerivce: IMonitorService = new MonitorService(checkRepository, websiteRepository);

@@ -53,6 +53,23 @@ export class AppComponent {
     this.authenticationService.logout();
   }
 
+  protected addWebsiteStatistics(websiteStatistics: WebsiteStatistics): void {
+    const existingWebsiteStatistics: WebsiteStatistics = this.websiteStatistics
+      .find((x: WebsiteStatistics) => x.website.url === websiteStatistics.website.url);
+
+    if (existingWebsiteStatistics) {
+      existingWebsiteStatistics.availability = websiteStatistics.availability;
+      existingWebsiteStatistics.availabilityBadge = websiteStatistics.availabilityBadge;
+      existingWebsiteStatistics.averageResponseTime = websiteStatistics.averageResponseTime;
+      existingWebsiteStatistics.averageResponseTimeBadge = websiteStatistics.averageResponseTimeBadge;
+      existingWebsiteStatistics.totalDownTimeInMilliseconds = websiteStatistics.totalDownTimeInMilliseconds;
+      existingWebsiteStatistics.totalDownTimeInMillisecondsBadge = websiteStatistics.totalDownTimeInMillisecondsBadge;
+      existingWebsiteStatistics.website = websiteStatistics.website;
+    } else {
+      this.websiteStatistics.push(websiteStatistics);
+    }
+  }
+
   protected handleError(error: any): void {
     if (error.status === 401) {
       this.authenticationService.redirect();
@@ -60,14 +77,13 @@ export class AppComponent {
   }
 
 
-  protected loadUser(): void  {
+  protected loadUser(): void {
     this.authenticationService.getUser().subscribe((response: any) => {
       this.user = response;
     }, (error: Error) => this.handleError(error));
   }
 
   protected loadWebsite(): void {
-    this.websiteStatistics = [];
     this.http.get(`${environment.apiURL}/website`, { headers: this.authenticationService.getHeaders() })
       .subscribe((websites: any[]) => {
         for (const website of websites) {
@@ -79,7 +95,7 @@ export class AppComponent {
   protected loadWebsiteStatistics(url: string): void {
     this.http.get(`${environment.apiURL}/website/statistics?url=${url}`, { headers: this.authenticationService.getHeaders() })
       .subscribe((websiteStatistics: any) => {
-        this.websiteStatistics.push(new WebsiteStatistics(
+        this.addWebsiteStatistics(new WebsiteStatistics(
           websiteStatistics.availability,
           websiteStatistics.averageResponseTime,
           websiteStatistics.totalDownTimeInMilliseconds,

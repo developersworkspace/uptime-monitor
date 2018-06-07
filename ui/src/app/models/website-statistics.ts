@@ -6,6 +6,8 @@ export class WebsiteStatistics {
 
     public averageResponseTimeBadge: string = null;
 
+    public totalDownTimeInMillisecondsBadge: string = null;
+
     constructor(
         public availability: number,
         public averageResponseTime: number,
@@ -25,6 +27,11 @@ export class WebsiteStatistics {
     protected setAverageResponseTimeBadge(): void {
         // tslint:disable-next-line:max-line-length
         this.averageResponseTimeBadge = `https://img.shields.io/badge/${encodeURI(`Average Response Time-${Math.round(this.averageResponseTime)} ms-green`)}.svg`;
+    }
+
+    protected setTotalDownTimeBadge(): void {
+        // tslint:disable-next-line:max-line-length
+        this.totalDownTimeInMillisecondsBadge = `https://img.shields.io/badge/${encodeURI(`Total Down Time-${Math.round(this.totalDownTimeInMilliseconds / 1000)} seconds-red`)}.svg`;
     }
 
     protected getAvailabilityBadgeColor(): string {
