@@ -82,6 +82,7 @@ export class AppComponent {
         this.websiteStatistics.push(new WebsiteStatistics(
           websiteStatistics.availability,
           websiteStatistics.averageResponseTime,
+          websiteStatistics.totalDownTimeInMilliseconds,
           new Website(
             DateHelper.toDate(websiteStatistics.website.createdTimestamp),
             websiteStatistics.website.id,
