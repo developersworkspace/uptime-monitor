@@ -69,14 +69,14 @@ export class MonitorService implements IMonitorService {
     protected async checkWithRetry(url: string): Promise<Check> {
         let check: Check = null;
 
-        for (let count = 0; count < 3; count ++) {
+        for (let count = 0; count < 4; count ++) {
             check = await this.check(url);
 
             if (check.up) {
                 break;
             }
 
-            await this.delay(300);
+            await this.delay(500);
         }
 
         return check;
