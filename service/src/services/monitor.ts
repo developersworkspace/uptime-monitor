@@ -71,6 +71,8 @@ export class MonitorService implements IMonitorService {
             if (check.up) {
                 break;
             }
+
+            await this.delay(300);
         }
 
         return check;
