@@ -49,6 +49,14 @@ export class AppComponent {
     }, (error: Error) => this.handleError(error));
   }
 
+  public onClickDeleteWebsite(website: Website): void {
+    this.http.delete(`${environment.apiURL}/website?url=${website.url}`).subscribe((response: any) => {
+      this.websiteStatistics = [];
+
+      this.loadWebsite();
+    });
+  }
+
   public onClickLogout(): void {
     this.authenticationService.logout();
   }

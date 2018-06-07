@@ -4,6 +4,7 @@
 
 export const environment = {
   apiURL: 'http://localhost:3000/api',
+  // apiURL: 'http://api.uptime-monitor.openservices.co.za/api',
   production: false,
 };
 

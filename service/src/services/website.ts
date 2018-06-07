@@ -32,6 +32,18 @@ export class WebsiteService implements IWebsiteService {
         return website;
     }
 
+    public async delete(url: string, userId: string): Promise<Website> {
+        const website: Website = await this.websiteRepository.find(url, userId);
+
+        if (!website) {
+            return null;
+        }
+
+        await this.websiteRepository.delete(website.id, userId);
+
+        return website;
+    }
+
     public async find(url: string, userId: string): Promise<Website> {
         return this.websiteRepository.find(url, userId);
     }

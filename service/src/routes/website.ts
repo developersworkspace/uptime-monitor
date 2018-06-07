@@ -6,6 +6,20 @@ import { WebsiteStatistics } from '../value-objects/website-statistics';
 
 export class WebsiteRouter {
 
+    public static async delete(req: express.Request, res: express.Response) {
+        try {
+            const websiteService: IWebsiteService = container.get<IWebsiteService>('IWebsiteService');
+
+            const result: Website = await websiteService.delete(req.query.url, req['user'].id);
+
+            res.json(result);
+        } catch (err) {
+            res.status(500).json({
+                message: err.message,
+            });
+        }
+    }
+
     public static async get(req: express.Request, res: express.Response) {
         try {
             const websiteService: IWebsiteService = container.get<IWebsiteService>('IWebsiteService');

@@ -50,6 +50,7 @@
             <th scope="col">Name</th>
             <th scope="col">Availability</th>
             <th scope="col">Average Response Time</th>
+            <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
@@ -64,6 +65,9 @@
             </td>
             <td>
               <img src="{{ ws.averageResponseTimeBadge }}" />
+            </td>
+            <td>
+              <button (click)="onClickDeleteWebsite()" class="btn btn-danger">Delete</button>
             </td>
           </tr>
         </tbody>

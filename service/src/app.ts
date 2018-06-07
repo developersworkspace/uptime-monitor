@@ -29,6 +29,7 @@ app.route('/api/user')
     .get(UserRouter.get);
 
 app.route('/api/website')
+    .delete(WebsiteRouter.delete)
     .get(WebsiteRouter.get)
     .post(WebsiteRouter.post);
 

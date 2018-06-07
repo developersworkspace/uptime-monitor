@@ -7,6 +7,17 @@ import { BaseRepository } from './base';
 @injectable()
 export class WebsiteRepository extends BaseRepository implements IWebsiteRepository {
 
+    public async delete(id: string, userId: string): Promise<void> {
+        const database: mongodb.Db = await this.getDatabase();
+
+        const collection: mongodb.Collection = database.collection('websites');
+
+        await collection.deleteOne({
+            _id: id,
+            userId,
+        });
+    }
+
     public async find(url: string, userId: string): Promise<Website> {
         const database: mongodb.Db = await this.getDatabase();
 
