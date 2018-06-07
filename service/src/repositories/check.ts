@@ -42,7 +42,7 @@ export class CheckRepository extends BaseRepository implements ICheckRepository 
             timestamp: 1,
         }).toArray();
 
-        return result.map((x: any) => new Check(x._id, x.responseTime, x.timestamp, x.up, x.url));
+        return result.map((x: any) => new Check(x.error, x._id, x.responseTime, x.timestamp, x.up, x.url));
     }
 
     public async findLast(url: string): Promise<Check> {
@@ -60,7 +60,7 @@ export class CheckRepository extends BaseRepository implements ICheckRepository 
             return null;
         }
 
-        return new Check(result[0]._id, result[0].responseTime, result[0].timestamp, result[0].up, result[0].url);
+        return new Check(result[0].error, result[0]._id, result[0].responseTime, result[0].timestamp, result[0].up, result[0].url);
     }
 
     public async insert(check: Check): Promise<string> {
@@ -69,6 +69,7 @@ export class CheckRepository extends BaseRepository implements ICheckRepository 
         const collection: mongodb.Collection = database.collection('checks');
 
         const dto: any = {
+            error: check.error,
             responseTime: check.responseTime,
             timestamp: check.timestamp,
             up: check.up,

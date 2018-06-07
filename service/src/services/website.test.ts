@@ -40,10 +40,10 @@ describe('WebsiteService', () => {
         it('should return website statistics with availability', async () => {
             sinon.stub(checkRepository, 'findAll')
                 .returns([
-                    new Check(null, null, new Date(2018, 0, 1, 0, 0, 0), true, null),
-                    new Check(null, null, new Date(2018, 0, 2, 0, 0, 0), true, null),
-                    new Check(null, null, new Date(2018, 0, 3, 0, 0, 0), false, null),
-                    new Check(null, null, new Date(2018, 0, 4, 0, 0, 0), true, null),
+                    new Check(null, null, null, new Date(2018, 0, 1, 0, 0, 0), true, null),
+                    new Check(null, null, null, new Date(2018, 0, 2, 0, 0, 0), true, null),
+                    new Check(null, null, null, new Date(2018, 0, 3, 0, 0, 0), false, null),
+                    new Check(null, null, null, new Date(2018, 0, 4, 0, 0, 0), true, null),
                 ]);
 
             sinon.stub(websiteRepository, 'find')

@@ -30,4 +30,4 @@ rm -rf /opt/repositories/uptime-monitor
 npm install --prefix /opt/uptime-monitor
 
 # Run
-pm2 start -f --name uptime-monitor /opt/uptime-monitor/app.js
+pm2 start --name uptime-monitor /opt/uptime-monitor/app.js
