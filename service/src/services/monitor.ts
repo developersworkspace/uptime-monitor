@@ -45,7 +45,11 @@ export class MonitorService implements IMonitorService {
     protected async check(url: string): Promise<Check> {
         try {
             const startTimestamp: Date = new Date();
-            const response: any = await axios.get(url);
+
+            const response: any = await axios.get(url, {
+                timeout: 400,
+            });
+
             const endTimestamp: Date = new Date();
 
             if (response.status !== 200) {
