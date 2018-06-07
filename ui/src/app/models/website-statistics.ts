@@ -9,6 +9,7 @@ export class WebsiteStatistics {
     constructor(
         public availability: number,
         public averageResponseTime: number,
+        public totalDownTimeInMilliseconds: number,
         public website: Website,
     ) {
         this.setAvailabilityBadge();
@@ -18,7 +19,7 @@ export class WebsiteStatistics {
 
     protected setAvailabilityBadge(): void {
         // tslint:disable-next-line:max-line-length
-        this.availabilityBadge = `https://img.shields.io/badge/${encodeURI(`Availability-${this.availability} %-${this.getAvailabilityBadgeColor()}`)}.svg`;
+        this.availabilityBadge = `https://img.shields.io/badge/${encodeURI(`Availability-${Math.round(this.availability * 10000) / 10000} %-${this.getAvailabilityBadgeColor()}`)}.svg`;
     }
 
     protected setAverageResponseTimeBadge(): void {

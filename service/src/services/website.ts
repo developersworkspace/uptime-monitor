@@ -59,7 +59,7 @@ export class WebsiteService implements IWebsiteService {
 
         const averageResponseTime: number = await this.checkRepository.calculateAverageResponseTime(url);
 
-        return new WebsiteStatistics(availability, averageResponseTime, website);
+        return new WebsiteStatistics(availability, averageResponseTime, totalDownTimeInMilliseconds, website);
     }
 
     protected availabilitySince(currentTimestamp: Date, startTimestamp: Date, downTimeInMiliseconds: number): number {

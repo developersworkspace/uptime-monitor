@@ -5,6 +5,7 @@ export class WebsiteStatistics {
     constructor(
         public availability: number,
         public averageResponseTime: number,
+        public totalDownTimeInMilliseconds: number,
         public website: Website,
     ) {
 
