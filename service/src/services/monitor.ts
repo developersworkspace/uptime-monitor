@@ -28,7 +28,7 @@ export class MonitorService implements IMonitorService {
                 continue;
             }
 
-            const check: Check = await this.check(website.url);
+            const check: Check = await this.checkWithRetry(website.url);
 
             const previousCheck: Check = await this.checkRepository.findLast(website.url);
 
@@ -60,6 +60,20 @@ export class MonitorService implements IMonitorService {
                 message: error.message,
             }, null, url);
         }
+    }
+
+    protected async checkWithRetry(url: string): Promise<Check> {
+        let check: Check = null;
+
+        for (let count = 0; count < 3; count ++) {
+            check = await this.check(url);
+
+            if (check.up) {
+                break;
+            }
+        }
+
+        return check;
     }
 
     protected delay(milliseconds: number): Promise<void> {
