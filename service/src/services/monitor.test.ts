@@ -35,12 +35,13 @@ describe('MonitorService', () => {
   });
 
   describe('#checkAll', () => {
-    it('should check all website availability', async () => {
+
+    it('should check all websites availability', async () => {
       const checkRepositoryInsertSpy: sinon.SinonSpy = sinon.spy(checkRepository, 'insert');
 
       sinon.stub(websiteRepository, 'findAll').returns([
         new Website(null, null, null, 'http://example.com'),
-        new Website(null, null, null, 'https://www.google.com/'),
+        new Website(null, null, null, 'https://www.google.com'),
       ]);
 
       const monitorSerivce: IMonitorService = new MonitorService(checkRepository, websiteRepository);
@@ -49,6 +50,22 @@ describe('MonitorService', () => {
 
       expect(checkRepositoryInsertSpy.callCount).to.be.eq(2);
     });
+
+    it('should not check websites more than once', async () => {
+      const checkRepositoryInsertSpy: sinon.SinonSpy = sinon.spy(checkRepository, 'insert');
+
+      sinon.stub(websiteRepository, 'findAll').returns([
+        new Website(null, null, null, 'http://example.com'),
+        new Website(null, null, null, 'http://example.com'),
+      ]);
+
+      const monitorSerivce: IMonitorService = new MonitorService(checkRepository, websiteRepository);
+
+      await monitorSerivce.checkAll();
+
+      expect(checkRepositoryInsertSpy.callCount).to.be.eq(1);
+    });
+
   });
 
 });
