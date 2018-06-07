@@ -1,6 +1,7 @@
 export class Check {
 
     constructor(
+        public error: any,
         public id: string,
         public responseTime: number,
         public timestamp: Date,
@@ -10,12 +11,12 @@ export class Check {
 
     }
 
-    public static create(endTimestamp: Date, startTimestamp: Date, url: string): Check {
-        if (!endTimestamp && !startTimestamp) {
-            return new Check(null, null, new Date(), false, url);
+    public static create(endTimestamp: Date, error: any, startTimestamp: Date, url: string): Check {
+        if (error || (!endTimestamp && !startTimestamp)) {
+            return new Check(error, null, null, new Date(), false, url);
         }
 
-        return new Check(null, endTimestamp.getTime() - startTimestamp.getTime(), new Date(), true, url);
+        return new Check(error, null, endTimestamp.getTime() - startTimestamp.getTime(), new Date(), true, url);
     }
 
 }

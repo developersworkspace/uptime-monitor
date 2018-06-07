@@ -49,13 +49,23 @@ export class MonitorService implements IMonitorService {
             const endTimestamp: Date = new Date();
 
             if (response.status !== 200) {
-                return Check.create(null, null, url);
+                return Check.create(null, {
+                    status: response.status,
+                }, null, url);
             }
 
-            return Check.create(endTimestamp, startTimestamp, url);
+            return Check.create(endTimestamp, null, startTimestamp, url);
         } catch (error) {
-            return Check.create(null, null, url);
+            return Check.create(null, {
+                message: error.message,
+            }, null, url);
         }
+    }
+
+    protected delay(milliseconds: number): Promise<void> {
+        return new Promise((resolve: () => void, reject: (error: Error) => void) => {
+            setTimeout(resolve, milliseconds);
+        });
     }
 
 }
