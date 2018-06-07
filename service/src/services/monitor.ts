@@ -47,7 +47,7 @@ export class MonitorService implements IMonitorService {
             const startTimestamp: Date = new Date();
 
             const response: any = await axios.get(url, {
-                timeout: 400,
+                // timeout: 400,
             });
 
             const endTimestamp: Date = new Date();
