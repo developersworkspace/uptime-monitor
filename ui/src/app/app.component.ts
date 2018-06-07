@@ -50,7 +50,8 @@ export class AppComponent {
   }
 
   public onClickDeleteWebsite(website: Website): void {
-    this.http.delete(`${environment.apiURL}/website?url=${website.url}`).subscribe((response: any) => {
+    this.http.delete(`${environment.apiURL}/website?url=${website.url}`, { headers: this.authenticationService.getHeaders() })
+    .subscribe((response: any) => {
       this.websiteStatistics = [];
 
       this.loadWebsite();
