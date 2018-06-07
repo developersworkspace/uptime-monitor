@@ -17,6 +17,8 @@ export class WebsiteStatistics {
         this.setAvailabilityBadge();
 
         this.setAverageResponseTimeBadge();
+
+        this.setTotalDownTimeInMillisecondsBadge();
     }
 
     protected setAvailabilityBadge(): void {
@@ -29,7 +31,7 @@ export class WebsiteStatistics {
         this.averageResponseTimeBadge = `https://img.shields.io/badge/${encodeURI(`Average Response Time-${Math.round(this.averageResponseTime)} ms-green`)}.svg`;
     }
 
-    protected setTotalDownTimeBadge(): void {
+    protected setTotalDownTimeInMillisecondsBadge(): void {
         // tslint:disable-next-line:max-line-length
         this.totalDownTimeInMillisecondsBadge = `https://img.shields.io/badge/${encodeURI(`Total Down Time-${Math.round(this.totalDownTimeInMilliseconds / 1000)} seconds-red`)}.svg`;
     }
