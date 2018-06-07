@@ -28,6 +28,7 @@ describe('WebsiteService', () => {
         } as ICheckRepository;
 
         websiteRepository = {
+            delete: null,
             find: async () => {
                 return null;
             },

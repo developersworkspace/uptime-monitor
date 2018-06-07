@@ -26,6 +26,7 @@ describe('MonitorService', () => {
     } as ICheckRepository;
 
     websiteRepository = {
+      delete: null,
       find: null,
       findAll: async () => {
         return null;
