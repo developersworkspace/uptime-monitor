@@ -14,6 +14,36 @@ basePath: "/api"
 schemes:
 - "http"
 paths:
+  /check:
+    get:
+      summary: "Find Check"
+      description: "Returns Check"
+      operationId: "findCheck"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "query"
+        name: "url"
+        description: "URL of website"
+        required: true
+        type: "string"
+      responses:
+        200:
+            description: "Check"
+            schema:
+                $ref: "#/definitions/Check"
+  /user:
+      get:
+        summary: "Find User"
+        description: "Returns User"
+        operationId: "findUser"
+        produces:
+        - "application/json"
+        responses:
+          200:
+              description: "User"
+              schema:
+                  $ref: "#/definitions/User"
   /website:
     get:
       summary: "Find Website"
@@ -67,6 +97,32 @@ paths:
             schema:
                 $ref: "#/definitions/WebsiteStatistics"
 definitions:
+  Check:
+    type: "object"
+    properties:
+      error:
+        type: "object"
+      id:
+        type: "string"
+      responseTime:
+        type: "number"
+      timestamp:
+        type: "string"
+      up:
+        type: "boolean"
+      url:
+        type: "string"
+  User:
+      type: "object"
+      properties:
+        family_name:
+          type: "string"
+        given_name:
+          type: "string"
+        id:
+          type: "string"
+        name:
+          type: "string"
   Website:
     type: "object"
     properties:

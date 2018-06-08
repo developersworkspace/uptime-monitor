@@ -9,4 +9,12 @@ export class Website {
 
     }
 
+    public valid(): boolean {
+        if (!this.name || !this.url) {
+            return false;
+        }
+
+        return true;
+    }
+
 }
