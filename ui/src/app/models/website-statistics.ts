@@ -4,8 +4,6 @@ export class WebsiteStatistics {
 
     public availabilityBadge: string = null;
 
-    public averageResponseTimeBadge: string = null;
-
     public totalDownTimeInMillisecondsBadge: string = null;
 
     constructor(
@@ -16,8 +14,6 @@ export class WebsiteStatistics {
     ) {
         this.setAvailabilityBadge();
 
-        this.setAverageResponseTimeBadge();
-
         this.setTotalDownTimeInMillisecondsBadge();
     }
 
@@ -26,18 +22,13 @@ export class WebsiteStatistics {
         this.availabilityBadge = `https://img.shields.io/badge/${encodeURI(`Availability-${Math.round(this.availability * 10000) / 10000} %-${this.getAvailabilityBadgeColor()}`)}.svg`;
     }
 
-    protected setAverageResponseTimeBadge(): void {
-        // tslint:disable-next-line:max-line-length
-        this.averageResponseTimeBadge = `https://img.shields.io/badge/${encodeURI(`Average Response Time-${Math.round(this.averageResponseTime)} ms-green`)}.svg`;
-    }
-
     protected setTotalDownTimeInMillisecondsBadge(): void {
         // tslint:disable-next-line:max-line-length
         this.totalDownTimeInMillisecondsBadge = `https://img.shields.io/badge/${encodeURI(`Total Down Time-${Math.round(this.totalDownTimeInMilliseconds / 1000)} seconds-red`)}.svg`;
     }
 
     protected getAvailabilityBadgeColor(): string {
-        if (this.availability > 99.999) {
+        if (this.availability > 99.99) {
             return 'green';
         }
 
@@ -45,7 +36,7 @@ export class WebsiteStatistics {
             return 'yellow';
         }
 
-        if (this.availability > 95) {
+        if (this.availability > 97) {
             return 'orange';
         }
 

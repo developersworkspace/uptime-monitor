@@ -70,7 +70,6 @@ export class AppComponent {
       existingWebsiteStatistics.availability = websiteStatistics.availability;
       existingWebsiteStatistics.availabilityBadge = websiteStatistics.availabilityBadge;
       existingWebsiteStatistics.averageResponseTime = websiteStatistics.averageResponseTime;
-      existingWebsiteStatistics.averageResponseTimeBadge = websiteStatistics.averageResponseTimeBadge;
       existingWebsiteStatistics.totalDownTimeInMilliseconds = websiteStatistics.totalDownTimeInMilliseconds;
       existingWebsiteStatistics.totalDownTimeInMillisecondsBadge = websiteStatistics.totalDownTimeInMillisecondsBadge;
       existingWebsiteStatistics.website = websiteStatistics.website;
