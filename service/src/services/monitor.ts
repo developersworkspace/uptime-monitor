@@ -60,6 +60,7 @@ export class MonitorService implements IMonitorService {
 
             return Check.create(endTimestamp, null, startTimestamp, url);
         } catch (error) {
+            console.log(url);
             return Check.create(null, {
                 message: error.message,
             }, null, url);

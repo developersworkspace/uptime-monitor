@@ -3,8 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  // apiURL: 'http://localhost:3000/api',
-  apiURL: 'http://api.uptime-monitor.openservices.co.za/api',
+  apiURL: 'http://localhost:3000/api',
+  // apiURL: 'http://api.uptime-monitor.openservices.co.za/api',
   production: false,
 };
 

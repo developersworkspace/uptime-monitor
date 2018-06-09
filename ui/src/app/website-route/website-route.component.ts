@@ -42,6 +42,7 @@ export class WebsiteRouteComponent extends BaseComponent implements OnInit {
   protected loadChecks(): void {
     this.http.get(`${environment.apiURL}/check?url=${this.url}`, { headers: this.authenticationService.getHeaders() })
       .subscribe((response: any[]) => {
+        console.log(response);
         this.checks = response;
       }, (error: Error) => this.handleError(error));
   }

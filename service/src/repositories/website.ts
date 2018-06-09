@@ -40,9 +40,9 @@ export class WebsiteRepository extends BaseRepository implements IWebsiteReposit
 
         const collection: mongodb.Collection = database.collection('websites');
 
-        const result: any[] = await collection.find({
-            userId,
-        }).sort({
+        const query: any = userId ? { userId } : {};
+
+        const result: any[] = await collection.find(query).sort({
             createdTimestamp: -1,
         }).toArray();
 
