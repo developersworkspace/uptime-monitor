@@ -26,14 +26,12 @@ export class DashboardRouteComponent extends BaseComponent implements OnInit {
   ) {
 
     super(authenticationService);
-
-    this.loadWebsite();
-
-    setInterval(() => this.loadWebsite(), 30000);
   }
 
   public ngOnInit(): void {
+    this.loadWebsites();
 
+    setInterval(() => this.loadWebsites(), 30000);
   }
 
   public onClickCreateWebsite(): void {
@@ -44,7 +42,7 @@ export class DashboardRouteComponent extends BaseComponent implements OnInit {
       this.createWebsiteName = null;
       this.createWebsiteURL = null;
 
-      this.loadWebsite();
+      this.loadWebsites();
     }, (error: Error) => this.handleError(error));
   }
 
@@ -53,7 +51,7 @@ export class DashboardRouteComponent extends BaseComponent implements OnInit {
       .subscribe((response: any) => {
         this.websiteStatistics = [];
 
-        this.loadWebsite();
+        this.loadWebsites();
       });
   }
 
@@ -77,7 +75,7 @@ export class DashboardRouteComponent extends BaseComponent implements OnInit {
     }
   }
 
-  protected loadWebsite(): void {
+  protected loadWebsites(): void {
     this.http.get(`${environment.apiURL}/website`, { headers: this.authenticationService.getHeaders() })
       .subscribe((websites: any[]) => {
         for (const website of websites) {
