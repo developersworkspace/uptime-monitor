@@ -55,10 +55,6 @@ export class DashboardRouteComponent extends BaseComponent implements OnInit {
       });
   }
 
-  public onClickLogout(): void {
-    this.authenticationService.logout();
-  }
-
   protected addWebsiteStatistics(websiteStatistics: WebsiteStatistics): void {
     const existingWebsiteStatistics: WebsiteStatistics = this.websiteStatistics
       .find((x: WebsiteStatistics) => x.website.url === websiteStatistics.website.url);

@@ -10,6 +10,10 @@ export class BaseComponent {
         this.loadUser();
     }
 
+    public onClickLogout(): void {
+        this.authenticationService.logout();
+    }
+
     protected handleError(error: any): void {
         if (error.status === 401) {
             this.authenticationService.redirect();
