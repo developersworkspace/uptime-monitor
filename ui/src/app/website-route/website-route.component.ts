@@ -6,6 +6,7 @@ import { Website } from '../models/website';
 import { environment } from '../../environments/environment';
 import { DateHelper } from '../helpers/date';
 import { ActivatedRoute, Params } from '@angular/router';
+import { Check } from '../models/check';
 
 @Component({
   selector: 'app-website-route',
@@ -42,8 +43,7 @@ export class WebsiteRouteComponent extends BaseComponent implements OnInit {
   protected loadChecks(): void {
     this.http.get(`${environment.apiURL}/check?url=${this.url}`, { headers: this.authenticationService.getHeaders() })
       .subscribe((response: any[]) => {
-        console.log(response);
-        this.checks = response;
+        this.checks = response.map((x: any) => new Check(x.error, x.id, x.responseTime, DateHelper.toDate(x.timestamp), x.up, x.url));
       }, (error: Error) => this.handleError(error));
   }
 

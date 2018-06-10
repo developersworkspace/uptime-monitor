@@ -31,14 +31,18 @@
       <table class="table">
         <thead>
           <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Availability</th>
-            <th scope="col"></th>
+            <th scope="col">Timestamp</th>
+            <th scope="col">Response Time</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let check of checks">
-            
+          <tr *ngFor="let check of checks" class="{{ check.up ? 'bg-success' : 'bg-danger' }}">
+            <td>
+              {{ check.timestamp | date: 'dd MMM yyyy HH:mm:ss' }}
+            </td>
+            <td>
+              {{ check.responseTime }} ms
+            </td>
           </tr>
         </tbody>
       </table>
