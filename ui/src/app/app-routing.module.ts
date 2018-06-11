@@ -3,14 +3,19 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth.guard';
 import { DashboardRouteComponent } from './dashboard-route/dashboard-route.component';
 import { WebsiteRouteComponent } from './website-route/website-route.component';
+import { HomeRouteComponent } from './home-route/home-route.component';
 
 const appRoutes: Routes = [
+    {
+        component: HomeRouteComponent,
+        path: '',
+    },
     {
         canActivate: [
             AuthGuard,
         ],
         component: DashboardRouteComponent,
-        path: '',
+        path: 'dashboard',
     },
     {
         canActivate: [

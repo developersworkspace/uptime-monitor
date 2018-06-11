@@ -7,7 +7,12 @@
           Dashboard
         </a>
       </li>
-      <li>
+      <li *ngIf="!user">
+        <a [routerLink]="['/dashboard']" class="nav-link">
+          Login
+        </a>
+      </li>
+      <li *ngIf="user">
         <a (click)="onClickLogout()" class="nav-link" href="">
           Logout
         </a>

@@ -39,6 +39,10 @@ export class AuthenticationService {
 
     if (token) {
       localStorage.setItem('authentication.token', token);
+
+      if (this.getStateFromURL()) {
+        location.href = this.getStateFromURL();
+      }
     }
 
     token = localStorage.getItem('authentication.token');
@@ -57,27 +61,45 @@ export class AuthenticationService {
       `redirect_uri=${environment.production ? `http://uptime-monitor.openservices.co.za` : `http://localhost:4200`}`,
       `response_type=token`,
       `scope=https://www.googleapis.com/auth/userinfo.profile`,
+      `state=${btoa(location.href)}`,
     ];
 
     location.href = `https://accounts.google.com/o/oauth2/v2/auth?${parameters.join('&')}`;
   }
 
   protected getAccessTokenFromURL(): string {
-    const splittedURLByHash: string[] = location.href.split('#');
+    const queryParameters: {} = this.parseHashQueryParameters();
 
-    if (splittedURLByHash.length < 2) {
-      return null;
-    }
+    return queryParameters['access_token'];
+  }
 
-    const splittedQueryParametersByAmpersand: string[] = splittedURLByHash[1].split('&');
+  protected parseHashQueryParameters(): any {
+    const str: string = location.hash.substring(1);
+
+    const splittedParameters: string[] = str.split('&');
 
     const queryParameters: {} = {};
 
-    for (const str of splittedQueryParametersByAmpersand) {
-      queryParameters[str.split('=')[0]] = str.split('=')[1];
+    for (const s of splittedParameters) {
+      queryParameters[s.split('=')[0]] = s.split('=')[1];
     }
 
-    return queryParameters['access_token'];
+    return queryParameters;
+  }
+
+
+  protected getStateFromURL(): string {
+    const queryParameters: {} = this.parseHashQueryParameters();
+
+    let state: string = queryParameters['state'];
+
+    if (!state) {
+      return null;
+    }
+
+    state = decodeURIComponent(state);
+
+    return atob(state);
   }
 
 }

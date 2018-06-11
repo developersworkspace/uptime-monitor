@@ -1,22 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from '../base.component';
-import { AuthenticationService } from '../authentication.service';
 import { HttpClient } from '@angular/common/http';
+import { AuthenticationService } from '../authentication.service';
 import { WebsiteStatistics } from '../models/website-statistics';
 import { environment } from '../../environments/environment';
 import { Website } from '../models/website';
 import { DateHelper } from '../helpers/date';
 
 @Component({
-  selector: 'app-dashboard-route',
-  templateUrl: './dashboard-route.component.html',
-  styleUrls: ['./dashboard-route.component.css']
+  selector: 'app-home-route',
+  templateUrl: './home-route.component.html',
+  styleUrls: ['./home-route.component.css']
 })
-export class DashboardRouteComponent extends BaseComponent implements OnInit {
-
-  public createWebsiteName: string = null;
-
-  public createWebsiteURL: string = null;
+export class HomeRouteComponent extends BaseComponent implements OnInit {
 
   public websiteStatistics: WebsiteStatistics[] = [];
 
@@ -24,34 +20,18 @@ export class DashboardRouteComponent extends BaseComponent implements OnInit {
     authenticationService: AuthenticationService,
     protected http: HttpClient,
   ) {
-    super(authenticationService, true);
+    super(authenticationService, false);
   }
 
   public ngOnInit(): void {
+    if (this.authenticationService.isAuthenticated()) {
+      location.href = 'dashboard';
+      return;
+    }
+
     this.loadWebsites();
 
     setInterval(() => this.loadWebsites(), 30000);
-  }
-
-  public onClickCreateWebsite(): void {
-    this.http.post(`${environment.apiURL}/website`, {
-      name: this.createWebsiteName,
-      url: this.createWebsiteURL,
-    }, { headers: this.authenticationService.getHeaders() }).subscribe((response: any) => {
-      this.createWebsiteName = null;
-      this.createWebsiteURL = null;
-
-      this.loadWebsites();
-    }, (error: Error) => this.handleError(error));
-  }
-
-  public onClickDeleteWebsite(website: Website): void {
-    this.http.delete(`${environment.apiURL}/website?url=${website.url}`, { headers: this.authenticationService.getHeaders() })
-      .subscribe((response: any) => {
-        this.websiteStatistics = [];
-
-        this.loadWebsites();
-      });
   }
 
   protected addWebsiteStatistics(websiteStatistics: WebsiteStatistics): void {

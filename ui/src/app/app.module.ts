@@ -6,12 +6,14 @@ import { AppComponent } from './app.component';
 import { DashboardRouteComponent } from './dashboard-route/dashboard-route.component';
 import { AppRoutingModule } from './app-routing.module';
 import { WebsiteRouteComponent } from './website-route/website-route.component';
+import { HomeRouteComponent } from './home-route/home-route.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardRouteComponent,
-    WebsiteRouteComponent
+    WebsiteRouteComponent,
+    HomeRouteComponent
   ],
   imports: [
     AppRoutingModule,

@@ -6,6 +6,7 @@ export class BaseComponent {
 
     constructor(
         protected authenticationService: AuthenticationService,
+        protected requiresAuthentication: boolean,
     ) {
         this.loadUser();
     }
@@ -15,7 +16,7 @@ export class BaseComponent {
     }
 
     protected handleError(error: any): void {
-        if (error.status === 401) {
+        if (this.requiresAuthentication && error.status === 401) {
             this.authenticationService.redirect();
         }
     }

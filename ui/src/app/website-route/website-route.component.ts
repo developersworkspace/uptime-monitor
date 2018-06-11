@@ -26,8 +26,7 @@ export class WebsiteRouteComponent extends BaseComponent implements OnInit {
     authenticationService: AuthenticationService,
     protected http: HttpClient,
   ) {
-
-    super(authenticationService);
+    super(authenticationService, true);
   }
 
   public ngOnInit() {
