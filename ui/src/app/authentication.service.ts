@@ -23,9 +23,15 @@ export class AuthenticationService {
   }
 
   public getHeaders(): HttpHeaders {
-    const headers: HttpHeaders = new HttpHeaders({
-      authorization: this.getAccessToken(),
-    });
+    let headers: HttpHeaders = new HttpHeaders();
+
+    const token: string = this.getAccessToken();
+
+    if (token) {
+      headers = new HttpHeaders({
+        authorization: this.getAccessToken(),
+      });
+    }
 
     return headers;
   }
