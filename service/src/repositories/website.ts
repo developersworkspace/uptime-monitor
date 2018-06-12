@@ -12,10 +12,9 @@ export class WebsiteRepository extends BaseRepository implements IWebsiteReposit
 
         const collection: mongodb.Collection = database.collection('websites');
 
-        await collection.deleteOne({
-            _id: id,
-            userId,
-        });
+        const query: any = userId ? { _id: id, userId } : { _id: id };
+
+        await collection.deleteOne(query);
     }
 
     public async find(url: string, userId: string): Promise<Website> {
@@ -23,10 +22,9 @@ export class WebsiteRepository extends BaseRepository implements IWebsiteReposit
 
         const collection: mongodb.Collection = database.collection('websites');
 
-        const result: any = await collection.findOne({
-            url,
-            userId,
-        });
+        const query: any = userId ? { url, userId } : { url };
+
+        const result: any = await collection.findOne(query);
 
         if (!result) {
             return null;

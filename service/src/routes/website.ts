@@ -7,6 +7,10 @@ import { WebsiteStatistics } from '../value-objects/website-statistics';
 export class WebsiteRouter {
 
     public static async delete(req: express.Request, res: express.Response) {
+        if (!req['user']) {
+            res.status(401).end();
+        }
+
         try {
             const websiteService: IWebsiteService = container.get<IWebsiteService>('IWebsiteService');
 
@@ -41,6 +45,10 @@ export class WebsiteRouter {
     }
 
     public static async post(req: express.Request, res: express.Response) {
+        if (!req['user']) {
+            res.status(401).end();
+        }
+
         try {
             const body = req.body;
 

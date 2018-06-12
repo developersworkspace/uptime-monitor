@@ -6,6 +6,10 @@ import { container } from '../ioc';
 export class CheckRouter {
 
     public static async get(req: express.Request, res: express.Response) {
+        if (!req['user']) {
+            res.status(401).end();
+        }
+
         try {
             const checkService: ICheckService = container.get<ICheckService>('ICheckService');
 

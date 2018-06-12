@@ -19,6 +19,10 @@ export class WebsiteService implements IWebsiteService {
     }
 
     public async create(userId: string, website: Website): Promise<Website> {
+        if (!userId) {
+            return null;
+        }
+
         if (!website.valid()) {
             return null;
         }
@@ -37,6 +41,10 @@ export class WebsiteService implements IWebsiteService {
     }
 
     public async delete(url: string, userId: string): Promise<Website> {
+        if (!userId) {
+            return null;
+        }
+
         const website: Website = await this.websiteRepository.find(url, userId);
 
         if (!website) {

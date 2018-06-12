@@ -23,7 +23,7 @@ export class GoogleAuthenticationMiddleware {
             next();
 
         } catch {
-            response.status(401).end();
+            next();
         }
     }
 

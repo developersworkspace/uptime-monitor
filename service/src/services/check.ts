@@ -18,6 +18,10 @@ export class CheckService implements ICheckService {
     }
 
     public async list(url: string, userId: string): Promise<Check[]> {
+        if (!userId) {
+            return null;
+        }
+
         const website: Website = await this.websiteRepository.find(url, userId);
 
         if (!website) {
