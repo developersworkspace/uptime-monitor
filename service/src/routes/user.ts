@@ -8,7 +8,7 @@ export class UserRouter {
         }
 
         try {
-            res.json(req['user']);
+            res.json(req['user'] ? req['user'].id : null);
         } catch (err) {
             res.status(500).json({
                 message: err.message,

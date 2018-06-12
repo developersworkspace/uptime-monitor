@@ -14,7 +14,7 @@ export class WebsiteRouter {
         try {
             const websiteService: IWebsiteService = container.get<IWebsiteService>('IWebsiteService');
 
-            const result: Website = await websiteService.delete(req.query.url, req['user'].id);
+            const result: Website = await websiteService.delete(req.query.url, req['user'] ? req['user'].id : null);
 
             res.json(result);
         } catch (err) {
@@ -29,11 +29,11 @@ export class WebsiteRouter {
             const websiteService: IWebsiteService = container.get<IWebsiteService>('IWebsiteService');
 
             if (req.query.url) {
-                const result: Website = await websiteService.find(req.query.url, req['user'].id);
+                const result: Website = await websiteService.find(req.query.url, req['user'] ? req['user'].id : null);
 
                 res.json(result);
             } else {
-                const result: Website[] = await websiteService.list(req['user'].id);
+                const result: Website[] = await websiteService.list(req['user'] ? req['user'].id : null);
 
                 res.json(result);
             }
@@ -56,7 +56,7 @@ export class WebsiteRouter {
 
             const websiteService: IWebsiteService = container.get<IWebsiteService>('IWebsiteService');
 
-            const result: Website = await websiteService.create(req['user'].id, website);
+            const result: Website = await websiteService.create(req['user'] ? req['user'].id : null, website);
 
             res.json(result);
         } catch (err) {
@@ -70,7 +70,7 @@ export class WebsiteRouter {
         try {
             const websiteService: IWebsiteService = container.get<IWebsiteService>('IWebsiteService');
 
-            const result: WebsiteStatistics = await websiteService.statistics(new Date(), req.query.url, req['user'].id);
+            const result: WebsiteStatistics = await websiteService.statistics(new Date(), req.query.url, req['user'] ? req['user'].id : null);
 
             res.json(result);
         } catch (err) {

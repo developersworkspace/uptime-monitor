@@ -13,7 +13,7 @@ export class CheckRouter {
         try {
             const checkService: ICheckService = container.get<ICheckService>('ICheckService');
 
-            const result: Check[] = await checkService.list(req.query.url, req['user'].id);
+            const result: Check[] = await checkService.list(req.query.url, req['user'] ? req['user'].id : null);
 
             res.json(result);
         } catch (err) {
