@@ -57,7 +57,7 @@ export class AuthenticationService {
   }
 
   public logout(): void {
-    localStorage.setItem('authentication.token', null);
+    localStorage.removeItem('authentication.token');
     this.redirect();
   }
 

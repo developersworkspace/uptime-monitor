@@ -25,7 +25,7 @@ export class HomeRouteComponent extends BaseComponent implements OnInit {
 
   public ngOnInit(): void {
     if (this.authenticationService.isAuthenticated()) {
-      location.href = 'dashboard';
+      // location.href = 'dashboard';
       return;
     }
 
