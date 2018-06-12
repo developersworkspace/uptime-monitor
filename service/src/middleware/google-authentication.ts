@@ -8,13 +8,13 @@ export class GoogleAuthenticationMiddleware {
             const accessToken: string = request.get('authorization');
 
             if (!accessToken) {
-                response.status(401).end();
+                next();
                 return;
             }
 
             const userInfoResponse: any = await axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${accessToken}`);
             if (userInfoResponse.status !== 200) {
-                response.status(401).end();
+                next();
                 return;
             }
 
