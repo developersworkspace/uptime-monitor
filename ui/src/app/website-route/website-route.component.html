@@ -46,7 +46,7 @@
               {{ check.timestamp | date: 'dd MMM yyyy HH:mm:ss' }}
             </td>
             <td>
-              {{ check.responseTime }} ms
+              {{ check.responseTime }} {{ check.up? 'ms' : '' }}
             </td>
           </tr>
         </tbody>
