@@ -1,4 +1,4 @@
 export const environment = {
-  apiURL: 'http://api.uptime-monitor.openservices.co.za/api',
+  apiURL: 'https://api.uptime-monitor.openservices.co.za/api',
   production: true
 };
